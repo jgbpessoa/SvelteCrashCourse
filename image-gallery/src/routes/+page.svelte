@@ -1,6 +1,7 @@
 <script lang="ts">
-  import axios from "axios";
+  //   import axios from "axios";
   import { onMount } from "svelte";
+  import { fade, fly } from "svelte/transition";
 
   let term = "";
   let photos: {
@@ -61,14 +62,20 @@
       <button
         class="button"
         on:click={() => {
-          handleSearch(term);
+          handleSearch();
         }}>Search</button
       >
     </div>
   </div>
   <div class="photos">
-    {#each photos as photo (photo.id)}
-      <img class="image" src={photo.urls.regular} alt={photo.alt_description} />
+    {#each photos as photo, index (photo.id)}
+      <img
+        class="image"
+        src={photo.urls.regular}
+        alt={photo.alt_description}
+        in:fly={{ y: 200, duration: 1500, delay: index * 150 }}
+        out:fade
+      />
     {/each}
   </div>
 </div>
