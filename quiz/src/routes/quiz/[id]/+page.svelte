@@ -1,7 +1,20 @@
 <script lang="ts">
+  import QuestionButton from "./components/QuestionButton.svelte";
+  import QuestionOption from "./components/QuestionOption.svelte";
+  import QuestionText from "./components/QuestionText.svelte";
+
   export let data: any;
+
+  let currentQuestionIndex = 0;
+  $: question = data.questions[currentQuestionIndex];
 </script>
 
-<div>
-  <h1>Quiz Page - {data.name}</h1>
+<div class="w-full">
+  <QuestionText text={question.question} />
+  <div class="flex justify-between flex-wrap">
+    {#each question.options as option (option.id)}
+      <QuestionOption {option} />
+    {/each}
+  </div>
+  <QuestionButton />
 </div>
